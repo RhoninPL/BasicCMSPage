@@ -36,6 +36,6 @@ namespace Repositories.IRepository
         /// Get single news
         /// </summary>
         /// <returns></returns>
-        News GetNews();
+        News GetNews(long id);
     }
 }

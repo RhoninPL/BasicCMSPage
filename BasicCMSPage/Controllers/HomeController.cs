@@ -64,23 +64,36 @@ namespace BasicCMSPage.Controllers
             if (ModelState.IsValid)
             {
                 repository.AddNews(news);
-                RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             return View(news);
         }
 
-        public ActionResult About()
+        /// <summary>
+        /// Edit method, show edit form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Edit(long id)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            News news = repository.GetNews(id);
+            return View(news);
         }
 
-        public ActionResult Contact()
+        /// <summary>
+        /// Edit method to update news in db
+        /// </summary>
+        /// <param name="news"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Edit(News news)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                repository.UpdateNews(news);
+                return RedirectToAction("Index");
+            }
+            return View("Edit",news);
         }
 
         #endregion
