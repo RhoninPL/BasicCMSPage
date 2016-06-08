@@ -1,0 +1,52 @@
+﻿div.container {
+    padding-top: 150px;
+    max-width: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+div.bg-1 {
+    background-image: url(WP_20150605_15_25_22_Pro.jpeg);
+    color: #ffffff;
+    margin-top: 0px;
+}
+
+.bg-2 {
+    background-color: #474e5d;
+    color: #ffffff;
+}
+
+.bg-3 {
+    background-color: #ffffff;
+    color: #555555;
+}
+
+.bg-4 {
+    background-color: #2f2f2f;
+    color: #ffffff;
+}
+
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.navbar-default {
+    position: fixed;
+    min-width: 100%;
+}
+
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+
+.navbar-nav li a:hover {
+    color: #1abc9c !important;
+}

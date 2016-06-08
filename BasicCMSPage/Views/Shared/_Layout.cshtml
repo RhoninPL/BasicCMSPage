@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-default"  style="position: fixed;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Me</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/home/index/#whoami">WHO</a></li>
+                    <li><a href="/home/index/#whatami">WHAT</a></li>
+                    <li><a href="/admin/index">Admin</a></li>
+                </ul>
+            </div>
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <footer class="container-fluid bg-4 text-center">
+        <p>Bootstrap Theme Made By <a href="http://www.w3schools.com">www.w3schools.com</a></p>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
