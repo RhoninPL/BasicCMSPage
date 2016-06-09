@@ -40,7 +40,7 @@ namespace BasicCMSPage.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            IEnumerable<News> news = repository.GetAllNews();
+            IEnumerable<News> news = repository.GetAllNotArchived();
             return View(news);
         }
 
@@ -76,7 +76,7 @@ namespace BasicCMSPage.Controllers
         [HttpGet]
         public ActionResult Edit(long id)
         {
-            News news = repository.GetNews(id);
+            News news = repository.Get(id);
             return View(news);
         }
 
@@ -93,9 +93,40 @@ namespace BasicCMSPage.Controllers
                 repository.UpdateNews(news);
                 return RedirectToAction("Index");
             }
-            return View("Edit",news);
+            return View("Edit", news);
         }
 
+        /// <summary>
+        /// Method to show details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Details(long id)
+        {
+            var news = repository.Get(id);
+            return View("Details", news);
+        }
+
+        /// <summary>
+        /// Delete method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Delete(long id)
+        {
+            repository.Delete(id);
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// List of news to management
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult List()
+        {
+            IEnumerable<News> news = repository.GetAll();
+            return View(news);
+        }
         #endregion
 
     }

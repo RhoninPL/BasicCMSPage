@@ -11,16 +11,22 @@ namespace Repositories.Repository
     /// <summary>
     /// Repository for news DB
     /// </summary>
-    public class NewsRepository : DBContainer,INewsRepository
+    public class NewsRepository : BaseRepository<News>,INewsRepository
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public NewsRepository() : base()
+        {}
+
         /// <summary>
         /// Add news to the DB
         /// </summary>
         /// <param name="news"></param>
         public void AddNews(News news)
         {
-            NewsSet.Add(news);
-            this.SaveChanges();
+            dbSet.Add(news);
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -29,44 +35,15 @@ namespace Repositories.Repository
         /// <param name="news"></param>
         public void UpdateNews(News news)
         {
-            // newsDb = NewsSet.FirstOrDefault(x => x.Id == news.Id);
-            //if (newsDb == null)
-            //{
-            //    throw new Exception("No entity found!");
-            //}
-
-            //newsDb = news;
-            NewsSet.Attach(news);
-            this.Entry(news).State = EntityState.Modified;
-            this.SaveChanges();
+            dbSet.Attach(news);
+            context.Entry(news).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
-        /// <summary>
-        /// Delete news in DB
-        /// </summary>
-        /// <param name="id"></param>
-        public void DeleteNews(long id)
+        public IEnumerable<News> GetAllNotArchived()
         {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Get all news from DB
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<News> GetAllNews()
-        {
-            IEnumerable<News> dbNews = NewsSet.OrderByDescending(x => x.Id);
+            IEnumerable<News> dbNews = dbSet.Where(x => x.Archive == false);
             return dbNews;
-        }
-
-        /// <summary>
-        /// Get single news from DB
-        /// </summary>
-        /// <returns></returns>
-        public News GetNews(long id)
-        {
-            return NewsSet.FirstOrDefault(x => x.Id == id);
         }
     }
 }

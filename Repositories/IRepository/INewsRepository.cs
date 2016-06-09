@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Domain;
+using Repositories.IRepository.BaseRepository;
 
 namespace Repositories.IRepository
 {
     /// <summary>
     /// Interface for News Repository
     /// </summary>
-    public interface INewsRepository
+    public interface INewsRepository : IBaseRepository<News>
     {
         /// <summary>
         /// Add news
@@ -21,21 +22,9 @@ namespace Repositories.IRepository
         void UpdateNews(News news);
 
         /// <summary>
-        /// Delete news
-        /// </summary>
-        /// <param name="id"></param>
-        void DeleteNews(long id);
-
-        /// <summary>
-        /// Get all news
+        /// Get all news that are not archived
         /// </summary>
         /// <returns></returns>
-        IEnumerable<News> GetAllNews();
-
-        /// <summary>
-        /// Get single news
-        /// </summary>
-        /// <returns></returns>
-        News GetNews(long id);
+        IEnumerable<News> GetAllNotArchived();
     }
 }
