@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Domain;
 using Repositories.IRepository.BaseRepository;
 
-namespace Repositories.Repository
+namespace Repositories.Repository.BaseRepository
 {
     /// <summary>
     /// Base repository

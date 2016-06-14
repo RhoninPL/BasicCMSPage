@@ -6,9 +6,29 @@
     <edmx:StorageModels>
     <Schema Namespace="DB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="DBStoreContainer">
-    <EntitySet Name="NewsSet" EntityType="DB.Store.NewsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="News" EntityType="DB.Store.News" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="DB.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="DB.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StaticPages" EntityType="DB.Store.StaticPages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UsersRoles" EntityType="DB.Store.UsersRoles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="NewsUsers" Association="DB.Store.NewsUsers">
+      <End Role="News" EntitySet="News" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersRoles_Users" Association="DB.Store.FK_UsersRoles_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersRoles" EntitySet="UsersRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersRoles_Roles" Association="DB.Store.FK_UsersRoles_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="UsersRoles" EntitySet="UsersRoles" />
+    </AssociationSet>
+    <AssociationSet Name="StaticPagesUsers" Association="DB.Store.StaticPagesUsers">
+      <End Role="StaticPages" EntitySet="StaticPages" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="NewsSet">
+  <EntityType Name="News">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -17,13 +37,116 @@
     <Property Name="ModificationDate" Type="datetime" Nullable="false" />
     <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Archive" Type="bit" Nullable="false" />
+    <Property Name="UsersId" Type="bigint" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StaticPages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+    <Property Name="ModificationDate" Type="datetime" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsersId" Type="bigint" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersRoles">
+    <Key>
+      <PropertyRef Name="Users_Id" />
+      <PropertyRef Name="Roles_Id" />
+    </Key>
+    <Property Name="Users_Id" Type="bigint" Nullable="false" />
+    <Property Name="Roles_Id" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="NewsUsers">
+    <End Role="News" Type="DB.Store.News" Multiplicity="*" />
+    <End Role="Users" Type="DB.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StaticPagesUsers">
+    <End Role="StaticPages" Type="DB.Store.StaticPages" Multiplicity="*" />
+    <End Role="Users" Type="DB.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaticPages">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersRoles_Users">
+    <End Role="Users" Type="DB.Store.Users" Multiplicity="1" />
+    <End Role="UsersRoles" Type="DB.Store.UsersRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsersRoles">
+        <PropertyRef Name="Users_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersRoles_Roles">
+    <End Role="UsersRoles" Type="DB.Store.UsersRoles" Multiplicity="*" />
+    <End Role="Roles" Type="DB.Store.Roles" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsersRoles">
+        <PropertyRef Name="Roles_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="DBContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="NewsSet" EntityType="DB.News" />
+          <EntitySet Name="News" EntityType="DB.News" />
+          <EntitySet Name="Users" EntityType="DB.Users" />
+          <EntitySet Name="Roles" EntityType="DB.Roles" />
+          <AssociationSet Name="NewsUsers" Association="DB.NewsUsers">
+            <End Role="News" EntitySet="News" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="UsersRoles" Association="DB.UsersRoles">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <EntitySet Name="StaticPages" EntityType="DB.StaticPages" />
+          <AssociationSet Name="StaticPagesUsers" Association="DB.StaticPagesUsers">
+            <End Role="StaticPages" EntitySet="StaticPages" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="News">
           <Key>
@@ -34,24 +157,133 @@
           <Property Name="ModificationDate" Type="DateTime" Nullable="false" />
           <Property Name="Content" Type="String" Nullable="false" />
           <Property Name="Archive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="DB.NewsUsers" FromRole="News" ToRole="Users" />
+          <Property Name="UsersId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="true" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="News" Relationship="DB.NewsUsers" FromRole="Users" ToRole="News" />
+          <NavigationProperty Name="Roles" Relationship="DB.UsersRoles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="StaticPages" Relationship="DB.StaticPagesUsers" FromRole="Users" ToRole="StaticPages" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="DB.UsersRoles" FromRole="Roles" ToRole="Users" />
+          <Property Name="Description" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="NewsUsers">
+          <End Type="DB.News" Role="News" Multiplicity="*" />
+          <End Type="DB.Users" Role="Users" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="News">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersRoles">
+          <End Type="DB.Users" Role="Users" Multiplicity="*" />
+          <End Type="DB.Roles" Role="Roles" Multiplicity="*" />
+        </Association>
+        <EntityType Name="StaticPages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddedDate" Type="DateTime" Nullable="false" />
+          <Property Name="ModificationDate" Type="DateTime" Nullable="false" />
+          <Property Name="Content" Type="String" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="DB.StaticPagesUsers" FromRole="StaticPages" ToRole="Users" />
+          <Property Name="UsersId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="StaticPagesUsers">
+          <End Type="DB.StaticPages" Role="StaticPages" Multiplicity="*" />
+          <End Type="DB.Users" Role="Users" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StaticPages">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DBStoreContainer" CdmEntityContainer="DBContainer">
-    <EntitySetMapping Name="NewsSet">
+    <EntitySetMapping Name="News">
       <EntityTypeMapping TypeName="IsTypeOf(DB.News)">
-        <MappingFragment StoreEntitySet="NewsSet">
+        <MappingFragment StoreEntitySet="News">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="AddDate" ColumnName="AddDate" />
           <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />
           <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="Archive" ColumnName="Archive" />
+          <ScalarProperty Name="UsersId" ColumnName="UsersId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(DB.Users)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(DB.Roles)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaticPages">
+      <EntityTypeMapping TypeName="IsTypeOf(DB.StaticPages)">
+        <MappingFragment StoreEntitySet="StaticPages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+          <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="UsersId" ColumnName="UsersId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UsersRoles" TypeName="DB.UsersRoles" StoreEntitySet="UsersRoles">
+      <EndProperty Name="Users">
+        <ScalarProperty Name="Id" ColumnName="Users_Id" />
+      </EndProperty>
+      <EndProperty Name="Roles">
+        <ScalarProperty Name="Id" ColumnName="Roles_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

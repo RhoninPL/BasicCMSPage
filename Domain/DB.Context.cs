@@ -25,6 +25,9 @@ namespace Domain
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<News> NewsSet { get; set; }
+        public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<StaticPages> StaticPages { get; set; }
     }
 }

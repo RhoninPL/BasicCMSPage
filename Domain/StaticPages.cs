@@ -12,16 +12,14 @@ namespace Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class News
+    public partial class StaticPages
     {
         public long Id { get; set; }
-        public System.DateTime AddDate { get; set; }
+        public System.DateTime AddedDate { get; set; }
         public System.DateTime ModificationDate { get; set; }
         public string Content { get; set; }
-        public bool Archive { get; set; }
         public long UsersId { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
     
         public virtual Users Users { get; set; }
     }

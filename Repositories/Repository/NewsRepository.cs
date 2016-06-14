@@ -5,6 +5,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using Domain;
 using Repositories.IRepository;
+using Repositories.Repository.BaseRepository;
 
 namespace Repositories.Repository
 {
