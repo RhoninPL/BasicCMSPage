@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BasicCMSPage.ViewModels;
 using Domain;
 using Repositories.IRepository;
 
@@ -40,8 +41,16 @@ namespace BasicCMSPage.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            IEnumerable<News> news = repository.GetAllNotArchived();
-            return View(news.ToList());
+            //IEnumerable<News> news = repository.GetAllNotArchived();
+            List<NewsIndexViewModel> news = new List<NewsIndexViewModel>()
+            {
+                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
+                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
+                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
+                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
+                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10}
+            };
+            return View(news);
         }
 
         /// <summary>

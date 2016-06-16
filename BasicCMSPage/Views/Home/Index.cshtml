@@ -1,6 +1,4 @@
-﻿@using Domain
-@using Microsoft.Ajax.Utilities
-@model IEnumerable<News>
+﻿@model IEnumerable<BasicCMSPage.ViewModels.NewsIndexViewModel>
 @{
     ViewBag.Title = "Newsy ze świata";
 
@@ -10,8 +8,16 @@
     foreach (var item in Model)
     {
         <div style="display: block; text-align: center; padding: 10px; background-color: rgba(231, 231, 231, 0.5);">
-            <div style="display: block; padding: 20px; background-color: rgb(183, 183, 183);">@item.Content</div>
-            <div style="display: block; font-size: 10px; margin-top: 10px; padding: 10px 0px; background-color: rgb(231, 231, 231);">@item.AddDate</div>
+            <div style="display: block; float: left;">
+                <div style="display: inline-block; font-size: 10px; margin-top: 10px; padding: 0px 10px; background-color: rgb(231, 231, 231);">
+                    <h3><a href="Details/@item.Id">@item.Title</a></h3></div>
+                <div style="display: inline-block; font-size: 10px; margin-top: 10px; margin-left: 10px;padding: 10px 10px; background-color: rgb(231, 231, 231); font-size: small;">@item.AddDateTime</div>
+            </div>
+            <div style="display: -moz-deck; padding: 20px; background-color: rgb(183, 183, 183); margin-top: 10px; text-align: justify;">@item.News</div>
+            <div style="display: block; float: right;">
+                <div style="display: inline-block; font-size: 10px; margin-top: 10px; padding: 10px 10px; background-color: rgb(231, 231, 231);">Dodał: @item.User</div>
+                <div style="display: inline-block; font-size: 10px; margin-top: 10px; padding: 10px 10px; background-color: rgb(231, 231, 231);">Komentarze (@item.CommentsCount)</div>
+            </div>
         </div>
     }
 }

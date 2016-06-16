@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/16/2016 08:36:42
--- Generated from EDMX file: C:\Users\michal\Documents\BasicCMSPage\Domain\DB.edmx
+-- Date Created: 06/16/2016 10:32:27
+-- Generated from EDMX file: C:\Users\Michal\Documents\BasicCMSPage\Domain\DB.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -29,6 +29,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_StaticPagesUsers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[StaticPages] DROP CONSTRAINT [FK_StaticPagesUsers];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CommentsNews]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comment] DROP CONSTRAINT [FK_CommentsNews];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -45,6 +48,9 @@ IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[StaticPages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StaticPages];
+GO
+IF OBJECT_ID(N'[dbo].[Comment]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Comment];
 GO
 IF OBJECT_ID(N'[dbo].[UsersRoles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UsersRoles];
