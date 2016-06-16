@@ -41,7 +41,7 @@ namespace BasicCMSPage.Controllers
         public ActionResult Index()
         {
             IEnumerable<News> news = repository.GetAllNotArchived();
-            return View(news);
+            return View(news.ToList());
         }
 
         /// <summary>

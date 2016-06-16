@@ -14,6 +14,12 @@ namespace Domain
     
     public partial class News
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public News()
+        {
+            this.Comments = new HashSet<Comments>();
+        }
+    
         public long Id { get; set; }
         public System.DateTime AddDate { get; set; }
         public System.DateTime ModificationDate { get; set; }
@@ -24,5 +30,7 @@ namespace Domain
         public string Description { get; set; }
     
         public virtual Users Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comments> Comments { get; set; }
     }
 }

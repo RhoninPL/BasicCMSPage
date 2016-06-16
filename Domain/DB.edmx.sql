@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/14/2016 14:01:37
--- Generated from EDMX file: C:\Users\Michal\Documents\BasicCMSPage\Domain\DB.edmx
+-- Date Created: 06/16/2016 08:36:42
+-- Generated from EDMX file: C:\Users\michal\Documents\BasicCMSPage\Domain\DB.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,13 +17,37 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_NewsUsers]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[News] DROP CONSTRAINT [FK_NewsUsers];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsersRoles_Users]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UsersRoles] DROP CONSTRAINT [FK_UsersRoles_Users];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsersRoles_Roles]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UsersRoles] DROP CONSTRAINT [FK_UsersRoles_Roles];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StaticPagesUsers]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StaticPages] DROP CONSTRAINT [FK_StaticPagesUsers];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[NewsSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[NewsSet];
+IF OBJECT_ID(N'[dbo].[News]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[News];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Roles];
+GO
+IF OBJECT_ID(N'[dbo].[StaticPages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StaticPages];
+GO
+IF OBJECT_ID(N'[dbo].[UsersRoles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UsersRoles];
 GO
 
 -- --------------------------------------------------
@@ -72,6 +96,18 @@ CREATE TABLE [dbo].[StaticPages] (
 );
 GO
 
+-- Creating table 'Comment'
+CREATE TABLE [dbo].[Comment] (
+    [Id] bigint IDENTITY(1,1) NOT NULL,
+    [AddDate] datetime  NOT NULL,
+    [Comment] nvarchar(max)  NOT NULL,
+    [UserName] nvarchar(max)  NOT NULL,
+    [UserIP] nvarchar(max)  NOT NULL,
+    [UserEmail] nvarchar(max)  NOT NULL,
+    [News_Id] bigint  NOT NULL
+);
+GO
+
 -- Creating table 'UsersRoles'
 CREATE TABLE [dbo].[UsersRoles] (
     [Users_Id] bigint  NOT NULL,
@@ -104,6 +140,12 @@ GO
 -- Creating primary key on [Id] in table 'StaticPages'
 ALTER TABLE [dbo].[StaticPages]
 ADD CONSTRAINT [PK_StaticPages]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Comment'
+ALTER TABLE [dbo].[Comment]
+ADD CONSTRAINT [PK_Comment]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -169,6 +211,21 @@ GO
 CREATE INDEX [IX_FK_StaticPagesUsers]
 ON [dbo].[StaticPages]
     ([UsersId]);
+GO
+
+-- Creating foreign key on [News_Id] in table 'Comment'
+ALTER TABLE [dbo].[Comment]
+ADD CONSTRAINT [FK_CommentsNews]
+    FOREIGN KEY ([News_Id])
+    REFERENCES [dbo].[News]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CommentsNews'
+CREATE INDEX [IX_FK_CommentsNews]
+ON [dbo].[Comment]
+    ([News_Id]);
 GO
 
 -- --------------------------------------------------

@@ -51,9 +51,11 @@
   <ItemGroup>
     <Compile Include="IRepository\BaseRepository\IBaseRepository.cs" />
     <Compile Include="IRepository\INewsRepository.cs" />
+    <Compile Include="IRepository\IUsersRepository.cs" />
     <Compile Include="Repository\BaseRepository\BaseRepository.cs" />
     <Compile Include="Repository\NewsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\UsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

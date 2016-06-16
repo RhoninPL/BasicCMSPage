@@ -10,6 +10,7 @@
     <EntitySet Name="Users" EntityType="DB.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="DB.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StaticPages" EntityType="DB.Store.StaticPages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Comment" EntityType="DB.Store.Comment" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UsersRoles" EntityType="DB.Store.UsersRoles" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="NewsUsers" Association="DB.Store.NewsUsers">
       <End Role="News" EntitySet="News" />
@@ -26,6 +27,10 @@
     <AssociationSet Name="StaticPagesUsers" Association="DB.Store.StaticPagesUsers">
       <End Role="StaticPages" EntitySet="StaticPages" />
       <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="CommentsNews" Association="DB.Store.CommentsNews">
+      <End Role="Comments" EntitySet="Comment" />
+      <End Role="News" EntitySet="News" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="News">
@@ -70,6 +75,18 @@
     <Property Name="UsersId" Type="bigint" Nullable="false" />
     <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AddDate" Type="datetime" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserIP" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserEmail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="News_Id" Type="bigint" Nullable="false" />
+  </EntityType>
   <EntityType Name="UsersRoles">
     <Key>
       <PropertyRef Name="Users_Id" />
@@ -99,6 +116,18 @@
       </Principal>
       <Dependent Role="StaticPages">
         <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CommentsNews">
+    <End Role="Comments" Type="DB.Store.Comment" Multiplicity="*" />
+    <End Role="News" Type="DB.Store.News" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="News">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="News_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -147,6 +176,11 @@
             <End Role="StaticPages" EntitySet="StaticPages" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Comment" EntityType="DB.Comments" />
+          <AssociationSet Name="CommentsNews" Association="DB.CommentsNews">
+            <End Role="Comments" EntitySet="Comment" />
+            <End Role="News" EntitySet="News" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="News">
           <Key>
@@ -161,6 +195,7 @@
           <Property Name="UsersId" Type="Int64" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="true" />
+          <NavigationProperty Name="Comments" Relationship="DB.CommentsNews" FromRole="News" ToRole="Comments" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -224,6 +259,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddDate" Type="DateTime" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" />
+          <NavigationProperty Name="News" Relationship="DB.CommentsNews" FromRole="Comments" ToRole="News" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="UserIP" Type="String" Nullable="false" />
+          <Property Name="UserEmail" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CommentsNews">
+          <End Type="DB.Comments" Role="Comments" Multiplicity="*" />
+          <End Type="DB.News" Role="News" Multiplicity="1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -276,12 +327,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Comment">
+      <EntityTypeMapping TypeName="IsTypeOf(DB.Comments)">
+        <MappingFragment StoreEntitySet="Comment">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserIP" ColumnName="UserIP" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="UsersRoles" TypeName="DB.UsersRoles" StoreEntitySet="UsersRoles">
       <EndProperty Name="Users">
         <ScalarProperty Name="Id" ColumnName="Users_Id" />
       </EndProperty>
       <EndProperty Name="Roles">
         <ScalarProperty Name="Id" ColumnName="Roles_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CommentsNews" TypeName="DB.CommentsNews" StoreEntitySet="Comment">
+      <EndProperty Name="News">
+        <ScalarProperty Name="Id" ColumnName="News_Id" />
+      </EndProperty>
+      <EndProperty Name="Comments">
+        <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
