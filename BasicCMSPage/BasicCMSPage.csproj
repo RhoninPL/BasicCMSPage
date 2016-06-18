@@ -210,6 +210,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DatabaseExample.mdf" />
+    <Content Include="App_Data\DatabaseExample_log.ldf">
+      <DependentUpon>DatabaseExample.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\WorldNews.mdf" />
     <Content Include="App_Data\WorldNews_log.ldf">
       <DependentUpon>WorldNews.mdf</DependentUpon>

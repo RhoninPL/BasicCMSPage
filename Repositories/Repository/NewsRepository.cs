@@ -31,9 +31,9 @@ namespace Repositories.Repository
             News newsDB = Mapper.Map<NewsAddViewModel, News>(news);
             newsDB.AddDate = DateTime.Now;
             newsDB.ModificationDate = DateTime.Now;
-            char[] tmp = new char[255];
-            newsDB.Content.CopyTo(0, tmp, 0, newsDB.Content.Length > 254 ? 255 : newsDB.Content.Length);
-            newsDB.Description = tmp.ToString();
+            char[] tmp = new char[newsDB.Content.Length > 254 ? 254 : newsDB.Content.Length];
+            newsDB.Content.CopyTo(0, tmp, 0, tmp.Length);
+            newsDB.Description = new string(tmp);
             newsDB.UsersId = 1;
             dbSet.Add(newsDB);
             context.SaveChanges();
