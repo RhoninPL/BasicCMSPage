@@ -70,6 +70,24 @@ namespace BasicCMSPage.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dodawanie artykułu.
+        /// </summary>
+        public static string AddingNews {
+            get {
+                return ResourceManager.GetString("AddingNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dodaj artykuł.
+        /// </summary>
+        public static string AddNews {
+            get {
+                return ResourceManager.GetString("AddNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Archiwum.
         /// </summary>
         public static string Archive {
@@ -129,6 +147,15 @@ namespace BasicCMSPage.Resources {
         public static string ModificationDate {
             get {
                 return ResourceManager.GetString("ModificationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tytuł.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

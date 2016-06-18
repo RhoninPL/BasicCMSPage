@@ -1,14 +1,14 @@
 ﻿@using BasicCMSPage.Resources
-@model Domain.News
+@model Repositories.ViewModels.NewsAddViewModel
 
 @{
-    ViewBag.Title = "Dodawanie wiadomości";
+    ViewBag.Title = NewsResource.AddingNews;
 }
 
-<h2>Dodaj wiadomość</h2>
+<h2>@NewsResource.AddNews</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Add","Home",FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
     
@@ -17,34 +17,26 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label(NewsResource.AddDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Title,  new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AddDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AddDate, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label(NewsResource.ModificationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.News,  new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ModificationDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ModificationDate, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.News, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.News, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label(NewsResource.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label(NewsResource.Archive, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label(NewsResource.Archive,  new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Archive)
+                    @Html.CheckBoxFor(model => model.Archive)
                     @Html.ValidationMessageFor(model => model.Archive, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -57,10 +49,6 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink(NewsResource.BackToListManagement, "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

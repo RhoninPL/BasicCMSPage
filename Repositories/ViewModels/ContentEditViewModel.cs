@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace BasicCMSPage.ViewModels
+namespace Repositories.ViewModels
 {
     public class ContentEditViewModel
     {

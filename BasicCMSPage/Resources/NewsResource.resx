@@ -120,6 +120,12 @@
   <data name="AddDate" xml:space="preserve">
     <value>Data dodania</value>
   </data>
+  <data name="AddingNews" xml:space="preserve">
+    <value>Dodawanie artykułu</value>
+  </data>
+  <data name="AddNews" xml:space="preserve">
+    <value>Dodaj artykuł</value>
+  </data>
   <data name="Archive" xml:space="preserve">
     <value>Archiwum</value>
   </data>
@@ -140,5 +146,8 @@
   </data>
   <data name="ModificationDate" xml:space="preserve">
     <value>Data modyfikacji</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Tytuł</value>
   </data>
 </root>

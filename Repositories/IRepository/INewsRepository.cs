@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain;
 using Repositories.IRepository.BaseRepository;
+using Repositories.ViewModels;
 
 namespace Repositories.IRepository
 {
@@ -13,7 +14,7 @@ namespace Repositories.IRepository
         /// Add news
         /// </summary>
         /// <param name="news"></param>
-        void AddNews(News news);
+        void AddNews(NewsAddViewModel news);
 
         /// <summary>
         /// Update news

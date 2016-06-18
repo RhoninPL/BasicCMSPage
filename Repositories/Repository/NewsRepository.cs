@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using AutoMapper;
 using Domain;
 using Repositories.IRepository;
 using Repositories.Repository.BaseRepository;
+using Repositories.ViewModels;
 
 namespace Repositories.Repository
 {
@@ -24,9 +26,16 @@ namespace Repositories.Repository
         /// Add news to the DB
         /// </summary>
         /// <param name="news"></param>
-        public void AddNews(News news)
+        public void AddNews(NewsAddViewModel news)
         {
-            dbSet.Add(news);
+            News newsDB = Mapper.Map<NewsAddViewModel, News>(news);
+            newsDB.AddDate = DateTime.Now;
+            newsDB.ModificationDate = DateTime.Now;
+            char[] tmp = new char[255];
+            newsDB.Content.CopyTo(0, tmp, 0, newsDB.Content.Length > 254 ? 255 : newsDB.Content.Length);
+            newsDB.Description = tmp.ToString();
+            newsDB.UsersId = 1;
+            dbSet.Add(newsDB);
             context.SaveChanges();
         }
 

@@ -1,4 +1,9 @@
-﻿div.container {
+﻿@font-face {
+    font-family: 'Poiret One', cursive;
+    src: url('PoiretOne-Regular.ttf');
+}
+
+div.container {
     padding-top: 150px;
     max-width: 100%;
     padding: 0px;
@@ -32,3 +37,54 @@
 .navbar-nav li a:hover {
     color: #1abc9c !important;
 }
+
+div.news-container {
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(231, 231, 231, 0.5);
+}
+
+div.news-title {
+    display: block;
+    float: left;
+}
+
+    div.news-title > div {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 0px 15px;
+        background-color: rgb(231, 231, 231);
+        margin-right: 10px;
+    }
+
+    div.news-title > span {
+        font-size: 10px;
+    }
+
+div.news-content {
+    display: inline-block;
+    padding: 20px;
+    background-color: rgb(183, 183, 183);
+    margin-top: 10px;
+    text-align: justify;
+}
+
+div.news-author {
+    display: block;
+    float: right;
+}
+
+    div.news-author > div {
+        display: inline-block;
+        font-size: 10px;
+        margin-top: 10px;
+        padding: 10px 10px;
+        background-color: rgb(231, 231, 231);
+        display: inline-block;
+        font-size: 10px;
+        margin-top: 10px;
+        padding: 10px 10px;
+        background-color: rgb(231, 231, 231);
+        margin-right: 10px;
+    }

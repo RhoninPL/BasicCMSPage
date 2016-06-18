@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BasicCMSPage.ViewModels;
-using Domain;
 using Repositories.IRepository;
+using Repositories.ViewModels;
 
 namespace BasicCMSPage.Controllers
 {
@@ -67,15 +66,16 @@ namespace BasicCMSPage.Controllers
         /// Add news to db
         /// </summary>
         /// <returns></returns>
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Add(News news)
+        public ActionResult Add(NewsAddViewModel model)
         {
             if (ModelState.IsValid)
             {
-                repository.AddNews(news);
+                repository.AddNews(model);
                 return RedirectToAction("Index");
             }
-            return View(news);
+            return View(model);
         }
 
         /// <summary>
@@ -85,8 +85,8 @@ namespace BasicCMSPage.Controllers
         [HttpGet]
         public ActionResult Edit(long id)
         {
-            News news = repository.Get(id);
-            return View(news);
+            //News news = repository.Get(id);
+            return View();
         }
 
         /// <summary>
@@ -94,16 +94,16 @@ namespace BasicCMSPage.Controllers
         /// </summary>
         /// <param name="news"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult Edit(News news)
-        {
-            if (ModelState.IsValid)
-            {
-                repository.UpdateNews(news);
-                return RedirectToAction("Index");
-            }
-            return View("Edit", news);
-        }
+        //[HttpPost]
+        //public ActionResult Edit(News news)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        repository.UpdateNews(news);
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View("Edit", news);
+        //}
 
         /// <summary>
         /// Method to show details
@@ -112,7 +112,15 @@ namespace BasicCMSPage.Controllers
         /// <returns></returns>
         public ActionResult Details(long id)
         {
-            var news = repository.Get(id);
+            //var news = repository.Get(id);
+            var news = new NewsDetailsViewModel()
+            {
+                AddDateTime = DateTime.Now,
+                News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ",
+                User = "Autor Ja",
+                Title = "Tytuł",
+                Views = 10
+            };
             return View("Details", news);
         }
 
@@ -123,7 +131,7 @@ namespace BasicCMSPage.Controllers
         /// <returns></returns>
         public ActionResult Delete(long id)
         {
-            repository.Delete(id);
+            //repository.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -131,11 +139,11 @@ namespace BasicCMSPage.Controllers
         /// List of news to management
         /// </summary>
         /// <returns></returns>
-        public ActionResult List()
-        {
-            IEnumerable<News> news = repository.GetAll();
-            return View(news);
-        }
+        //public ActionResult List()
+        //{
+        //    IEnumerable<News> news = repository.GetAll();
+        //    return View(news);
+        //}
         #endregion
 
     }

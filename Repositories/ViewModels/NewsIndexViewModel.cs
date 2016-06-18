@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BasicCMSPage.ViewModels
+namespace Repositories.ViewModels
 {
     /// <summary>
     /// View Model for news
