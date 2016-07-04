@@ -1,43 +1,34 @@
-﻿@model Domain.News
+﻿@model Repositories.ViewModels.NewsEditViewModel
 @using BasicCMSPage.Resources
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edycja artykułu";
 }
 
-<h2>Edycja</h2>
+<h2>Edycja artykułu</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>News</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.Label(NewsResource.AddDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label(NewsResource.Title,  new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AddDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AddDate, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label(NewsResource.ModificationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.News, new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ModificationDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ModificationDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label(NewsResource.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.News, new { @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.News, "", new { @class = "text-danger" })
             </div>
         </div>
 

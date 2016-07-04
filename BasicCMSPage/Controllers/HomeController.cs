@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using Domain;
 using Repositories.IRepository;
 using Repositories.ViewModels;
 
@@ -40,16 +42,9 @@ namespace BasicCMSPage.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            //IEnumerable<News> news = repository.GetAllNotArchived();
-            List<NewsIndexViewModel> news = new List<NewsIndexViewModel>()
-            {
-                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
-                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
-                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
-                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10},
-                new NewsIndexViewModel() {AddDateTime = DateTime.Now,CommentsCount = 5,News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ", User = "Autor Ja", Title = "Tytuł", Views = 10}
-            };
-            return View(news);
+            List<News> news = repository.GetAllNotArchived().ToList();
+            List<NewsIndexViewModel> newsList = Mapper.Map<List<NewsIndexViewModel>>(news);
+            return View(newsList);
         }
 
         /// <summary>
@@ -72,7 +67,8 @@ namespace BasicCMSPage.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.AddNews(model);
+                News news = Mapper.Map<NewsAddViewModel, News>(model);
+                repository.AddNews(news);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -85,8 +81,8 @@ namespace BasicCMSPage.Controllers
         [HttpGet]
         public ActionResult Edit(long id)
         {
-            //News news = repository.Get(id);
-            return View();
+            NewsEditViewModel news = Mapper.Map<NewsEditViewModel>(repository.Get(id));
+            return View(news);
         }
 
         /// <summary>
@@ -94,16 +90,17 @@ namespace BasicCMSPage.Controllers
         /// </summary>
         /// <param name="news"></param>
         /// <returns></returns>
-        //[HttpPost]
-        //public ActionResult Edit(News news)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        repository.UpdateNews(news);
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View("Edit", news);
-        //}
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Edit(NewsEditViewModel edit)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.UpdateNews(edit);
+                return RedirectToAction("Index");
+            }
+            return View("Edit", edit);
+        }
 
         /// <summary>
         /// Method to show details
@@ -112,16 +109,9 @@ namespace BasicCMSPage.Controllers
         /// <returns></returns>
         public ActionResult Details(long id)
         {
-            //var news = repository.Get(id);
-            var news = new NewsDetailsViewModel()
-            {
-                AddDateTime = DateTime.Now,
-                News = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed mattis dui. Suspendisse potenti. Donec at enim nec odio mollis venenatis sit amet aliquet leo. Nam eu eros vel nibh ultrices faucibus sed at nunc. Praesent vel mi molestie, lacinia nisl id, dictum tortor. Fusce ullamcorper sodales dui, sed viverra ipsum. Nunc aliquet vel libero scelerisque ornare. Nulla quis congue neque. Vestibulum tincidunt magna at lobortis ultricies. Sed vehicula gravida eros sed tempor. Duis sed tempor sapien. ",
-                User = "Autor Ja",
-                Title = "Tytuł",
-                Views = 10
-            };
-            return View("Details", news);
+            var news = repository.Get(id);
+            NewsDetailsViewModel newsDetails = Mapper.Map<NewsDetailsViewModel>(news);
+            return View("Details", newsDetails);
         }
 
         /// <summary>

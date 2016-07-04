@@ -11,10 +11,11 @@
             <div class="news-title">
                 <div>
                     <h3><a href="/Home/Details/@item.Id">@item.Title</a></h3></div>
-                <span>@item.AddDateTime</span>
+                <span>Dodane: @item.AddDateTime</span>
+                <span>Aktualizowane: @item.ModificationDate</span>
                 <span>Wyświetleń: @item.Views</span>
             </div>
-            <div class="news-content">@item.News</div>
+            <div class="news-content">@item.Description</div>
             <div class="news-author">
                 <div>Autor: @item.User</div>
                 <div>Komentarze (@item.CommentsCount)</div>

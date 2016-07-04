@@ -28,6 +28,11 @@ namespace Repositories.ViewModels
         public DateTime AddDateTime { get; set; }
         
         /// <summary>
+        /// Modification date
+        /// </summary>
+        public DateTime ModificationDate { get; set; }
+        
+        /// <summary>
         /// Author of news
         /// </summary>
         public string User { get; set; }
@@ -41,5 +46,10 @@ namespace Repositories.ViewModels
         /// How many comments there are
         /// </summary>
         public int CommentsCount { get; set; }
+
+        /// <summary>
+        /// Description of news
+        /// </summary>
+        public string Description { get; set; }
     }
 }

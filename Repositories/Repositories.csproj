@@ -66,6 +66,7 @@
     <Compile Include="ViewModels\LogInViewModel.cs" />
     <Compile Include="ViewModels\NewsAddViewModel.cs" />
     <Compile Include="ViewModels\NewsDetailsViewModel.cs" />
+    <Compile Include="ViewModels\NewsEditViewModel.cs" />
     <Compile Include="ViewModels\NewsIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

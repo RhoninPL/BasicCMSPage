@@ -39,10 +39,12 @@ div.container {
 }
 
 div.news-container {
-    display: inline-block;
+    display: block;
     text-align: center;
     padding: 10px;
     background-color: rgba(231, 231, 231, 0.5);
+    width: 800px;
+    padding-bottom: 50px;
 }
 
 div.news-title {
@@ -51,15 +53,18 @@ div.news-title {
 }
 
     div.news-title > div {
-        display: inline-block;
+        display: block;
         margin-top: 10px;
-        padding: 0px 15px;
-        background-color: rgb(231, 231, 231);
+        padding: 5px 5px;
+        /*background-color: rgb(231, 231, 231);*/
         margin-right: 10px;
+        text-align: left;
     }
 
     div.news-title > span {
         font-size: 10px;
+        float: left;
+        display: inline-block;
     }
 
 div.news-content {
@@ -68,6 +73,7 @@ div.news-content {
     background-color: rgb(183, 183, 183);
     margin-top: 10px;
     text-align: justify;
+    width: 100%;
 }
 
 div.news-author {

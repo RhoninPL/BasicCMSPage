@@ -14,13 +14,13 @@ namespace Repositories.IRepository
         /// Add news
         /// </summary>
         /// <param name="news"></param>
-        void AddNews(NewsAddViewModel news);
+        void AddNews(News news);
 
         /// <summary>
         /// Update news
         /// </summary>
         /// <param name="news"></param>
-        void UpdateNews(News news);
+        void UpdateNews(NewsEditViewModel news);
 
         /// <summary>
         /// Get all news that are not archived

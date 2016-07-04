@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Text;
 using AutoMapper;
 using Domain;
 using Repositories.IRepository;
@@ -26,15 +27,12 @@ namespace Repositories.Repository
         /// Add news to the DB
         /// </summary>
         /// <param name="news"></param>
-        public void AddNews(NewsAddViewModel news)
+        public void AddNews(News newsDB)
         {
-            News newsDB = Mapper.Map<NewsAddViewModel, News>(news);
             newsDB.AddDate = DateTime.Now;
             newsDB.ModificationDate = DateTime.Now;
-            char[] tmp = new char[newsDB.Content.Length > 254 ? 254 : newsDB.Content.Length];
-            newsDB.Content.CopyTo(0, tmp, 0, tmp.Length);
-            newsDB.Description = new string(tmp);
-            newsDB.UsersId = 1;
+            newsDB.Description = newsDB.Content.Substring(0, newsDB.Content.Length > 252 ? 252 : newsDB.Content.Length) + "...";
+            newsDB.UsersId = 1; // TODO: change 1 to id of user
             dbSet.Add(newsDB);
             context.SaveChanges();
         }
@@ -43,16 +41,29 @@ namespace Repositories.Repository
         /// Update news in DB
         /// </summary>
         /// <param name="news"></param>
-        public void UpdateNews(News news)
+        public void UpdateNews(NewsEditViewModel newsEdit)
         {
-            dbSet.Attach(news);
-            context.Entry(news).State = EntityState.Modified;
+            var newsDB = dbSet.Find(newsEdit.Id);
+            if (newsDB == null)
+            {
+                throw new Exception("Brak takiego artykułu!");
+            }
+            newsDB.Content = newsEdit.News;
+            newsDB.Title = newsEdit.Title;
+            newsDB.Archive = newsEdit.Archive;
+            newsDB.Description = newsEdit.News.Substring(0, newsDB.Content.Length > 252 ? 252 : newsDB.Content.Length) + "...";
+            newsDB.ModificationDate = DateTime.Now;
+
+            dbSet.Attach(newsDB);
+            context.Entry(newsDB).State = EntityState.Modified;
+            
             context.SaveChanges();
         }
 
         public IEnumerable<News> GetAllNotArchived()
         {
-            IEnumerable<News> dbNews = dbSet.Where(x => x.Archive == false);
+            IEnumerable<News> dbNews = dbSet.Where(x => x.Archive == false)
+                .OrderByDescending(x => x.ModificationDate);
             return dbNews;
         }
     }

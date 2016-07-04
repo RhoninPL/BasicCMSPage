@@ -13,33 +13,26 @@ namespace BasicCMSPage.App_Start
     {
         public static void Configure()
         {
-            //Mapper.Initialize(cfg => {
-            //    cfg.AddProfile(new NewsProfile());
-            //});
-            //var config = new MapperConfiguration(cfg =>
-            //{
-            //    cfg.CreateMap<News, NewsAddViewModel>()
-            //        .ForMember(d => d.News, s => s.MapFrom(x => x.Content));
-            //    cfg.CreateMap<NewsAddViewModel, News>()
-            //        .ForMember(d => d.Content, s => s.MapFrom(x => x.News));
-            //});
-
-            Mapper.Initialize(cfg => {
+            Mapper.Initialize(cfg =>
+            {
                 cfg.CreateMap<News, NewsAddViewModel>()
                     .ForMember(d => d.News, s => s.MapFrom(x => x.Content));
                 cfg.CreateMap<NewsAddViewModel, News>()
                     .ForMember(d => d.Content, s => s.MapFrom(x => x.News));
+                cfg.CreateMap<NewsIndexViewModel, News>()
+                    .ForMember(d => d.Content, s => s.MapFrom(x => x.News));
+                cfg.CreateMap<News, NewsIndexViewModel>()
+                    .ForMember(d => d.News, s => s.MapFrom(x => x.Content));
+                cfg.CreateMap<NewsDetailsViewModel, News>()
+                    .ForMember(d => d.Content, s => s.MapFrom(x => x.News));
+                cfg.CreateMap<News, NewsDetailsViewModel>()
+                    .ForMember(d => d.News, s => s.MapFrom(x => x.Content));
+                cfg.CreateMap<NewsEditViewModel, News>()
+                    .ForMember(d => d.Content, s => s.MapFrom(x => x.News));
+                cfg.CreateMap<News, NewsEditViewModel>()
+                    .ForMember(d => d.News, s => s.MapFrom(x => x.Content));
             });
         }
-        
-    }
 
-    //public class NewsProfile : Profile
-    //{
-    //    protected override void Configure()
-    //    {
-    //        Mapper.CreateMap<News,NewsAddViewModel>();
-    //        Mapper.CreateMap<NewsAddViewModel, News>();
-    //    }
-    //}
+    }
 }
