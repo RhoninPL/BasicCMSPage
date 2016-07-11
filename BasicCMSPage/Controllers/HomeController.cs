@@ -43,9 +43,7 @@ namespace BasicCMSPage.Controllers
             List<NewsIndexViewModel> newsList = Mapper.Map<List<NewsIndexViewModel>>(news);
             return View(newsList);
         }
-
         
-
         /// <summary>
         /// Method to show details
         /// </summary>
@@ -58,16 +56,6 @@ namespace BasicCMSPage.Controllers
             return View("Details", newsDetails);
         }
 
-        /// <summary>
-        /// Delete method
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult Delete(long id)
-        {
-            //repository.Delete(id);
-            return RedirectToAction("Index");
-        }
         #endregion
 
     }

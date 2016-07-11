@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using AutoMapper;
 using Domain;
 using Repositories.IRepository;
@@ -13,22 +15,37 @@ namespace BasicCMSPage.Areas.Admin.Controllers
         /// <summary>
         /// News repository
         /// </summary>
-        private INewsRepository repository;
+        private IAdminRepository repository;
 
         /// <summary>
         /// Constructor fro AdminController
         /// </summary>
         /// <param name="repository"></param>
-        public AdminController(INewsRepository repository)
+        public AdminController(IAdminRepository repository)
         {
             this.repository = repository;
         }
 
         #endregion
 
+        /// <summary>
+        /// Index method, redirect to List()
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Index()
+        {
+            return RedirectToAction("List");
+        }
+
+        /// <summary>
+        /// List of news
+        /// </summary>
+        /// <returns></returns>
         public ActionResult List()
         {
-            return View();
+            List<News> list = repository.GetAll().ToList();
+            List<NewsAdminListViewModel> news = Mapper.Map<List<NewsAdminListViewModel>>(list);
+            return View(news);
         }
 
         /// <summary>
@@ -53,7 +70,7 @@ namespace BasicCMSPage.Areas.Admin.Controllers
             {
                 News news = Mapper.Map<NewsAddViewModel, News>(model);
                 repository.AddNews(news);
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             return View(model);
         }
@@ -81,9 +98,20 @@ namespace BasicCMSPage.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 repository.UpdateNews(edit);
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             return View("Edit", edit);
+        }
+
+        /// <summary>
+        /// Delete method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Delete(long id)
+        {
+            repository.Delete(id);
+            return RedirectToAction("List");
         }
     }
 }

@@ -94,3 +94,7 @@ div.news-author {
         background-color: rgb(231, 231, 231);
         margin-right: 10px;
     }
+
+    div > textarea.text-area-news {
+        height: 500px;
+    }

@@ -40,6 +40,7 @@ namespace BasicCMSPage.App_Start
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<INewsRepository, NewsRepository>();
+            container.RegisterType<IAdminRepository, AdminRepository>();
         }
     }
 }

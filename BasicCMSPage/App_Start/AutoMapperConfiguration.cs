@@ -31,6 +31,8 @@ namespace BasicCMSPage.App_Start
                     .ForMember(d => d.Content, s => s.MapFrom(x => x.News));
                 cfg.CreateMap<News, NewsEditViewModel>()
                     .ForMember(d => d.News, s => s.MapFrom(x => x.Content));
+                cfg.CreateMap<NewsAdminListViewModel, News>();
+                cfg.CreateMap<News, NewsAdminListViewModel>();
             });
         }
 
