@@ -16,19 +16,11 @@
             <div class="col-sm-3 sidenav">
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="/Home/Index/">Strona główna</a></li>
-                    <li><a href="/Admin/Admin/List/">Zarządzanie</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li><a href="/Account/Logout">Wyloguj</a></li>
-
-                    }
-                    else
-                    {
-                        <li><a href="/Account/Login">Zaloguj</a></li>
-                    }
+                    <li><a href="/Admin/Admin/Add/">Dodaj nową wiadomość</a></li>
+                    <li><a href="/Admin/Admin/List">Zarządzanie</a></li>
+                    <li><a href="/Account/Logout">Wyloguj</a></li>
                 </ul>
             </div>
-
             <div class="col-sm-9">
                 @RenderBody()
             </div>

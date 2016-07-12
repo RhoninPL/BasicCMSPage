@@ -54,8 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository\BaseRepository\IBaseRepository.cs" />
+    <Compile Include="IRepository\IAdminRepository.cs" />
     <Compile Include="IRepository\INewsRepository.cs" />
     <Compile Include="IRepository\IUsersRepository.cs" />
+    <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\BaseRepository\BaseRepository.cs" />
     <Compile Include="Repository\NewsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\LogInViewModel.cs" />
     <Compile Include="ViewModels\NewsAddViewModel.cs" />
+    <Compile Include="ViewModels\NewsAdminListViewModel.cs" />
     <Compile Include="ViewModels\NewsDetailsViewModel.cs" />
     <Compile Include="ViewModels\NewsEditViewModel.cs" />
     <Compile Include="ViewModels\NewsIndexViewModel.cs" />

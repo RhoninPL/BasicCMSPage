@@ -2,12 +2,13 @@
 @using BasicCMSPage.Resources
 @{
     ViewBag.Title = "Edycja artykułu";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Edycja artykułu</h2>
 
 
-@using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     
@@ -27,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.News, new { @class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.News, new { @class = "form-control" } )
+                @Html.TextAreaFor(model => model.News, new { @class = "form-control text-area-news" } )
                 @Html.ValidationMessageFor(model => model.News, "", new { @class = "text-danger" })
             </div>
         </div>
